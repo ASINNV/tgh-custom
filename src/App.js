@@ -4,6 +4,8 @@ import './App.css';
 
 import { connect } from "react-redux";
 
+var carouselIntervalId = null;
+
 const activateCarousel = function () {
   let carousel = document.getElementById('home-carousel');
   let carouselBox = carousel.getBoundingClientRect();
@@ -23,7 +25,12 @@ const activateCarousel = function () {
 class App extends Component {
   componentDidMount() {
 
-    setInterval(activateCarousel, 5000); // start the carousel
+    carouselIntervalId = setInterval(activateCarousel, 5000); // start the carousel
+  }
+  componentWillUnmount() {
+    if (carouselIntervalId !== null) {
+      clearInterval(carouselIntervalId);
+    }
   }
 
   render() {
