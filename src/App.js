@@ -1,36 +1,23 @@
 import React, { Component } from 'react';
 import logo from './images/alpha_color.svg';
 import './App.css';
+import Carousel from './Components/Carousel.js';
 
 import { connect } from "react-redux";
 
-var carouselIntervalId = null;
-
-const activateCarousel = function () {
-  let carousel = document.getElementById('home-carousel');
-  let carouselBox = carousel.getBoundingClientRect();
-  let images = carousel.childNodes;
-
-  let existingValue = carousel.style.transform !== '' ? Number(carousel.style.transform.slice(11, -3)) : 0;
-  let horizontalOffset = existingValue - carouselBox.width;
-  let displacementLimit = (carouselBox.width * (images.length - 1)) * -1;
-
-  if (horizontalOffset >= displacementLimit) { // Greater than or equal to is used here because we're dealing with negatives
-    carousel.style.transform = "translateX(" + (existingValue - carouselBox.width) + "px)";
-  } else {
-    carousel.style.transform = "";
-  }
-};
-
 class App extends Component {
-  componentDidMount() {
 
-    carouselIntervalId = setInterval(activateCarousel, 5000); // start the carousel
-  }
-  componentWillUnmount() {
-    if (carouselIntervalId !== null) {
-      clearInterval(carouselIntervalId);
-    }
+  componentDidMount() {}
+
+  componentWillUnmount() {}
+
+  showContextMenu(e) {
+    let target = e.target;
+    console.log(target.parentNode);
+    // while (target.className !== "top-li") {
+    //   let target = target.parentNode;
+    // }
+    // console.log(target, " is the target");
   }
 
   render() {
@@ -54,17 +41,17 @@ class App extends Component {
         {/* navigation menu */}
         <div className="main-nav-container">
           <ul className="main-nav content-box">
-            <li>
+            <li className="top-li" onMouseOver={this.showContextMenu.bind(this)}>
               <a href="" className="">HOTEL</a>
-              <ul className="sub-nav-hotel">
+              <ul className="">
                 <li><a href="" className="">ACCOMMODATIONS</a></li>
                 <li><a href="" className="">AMENITIES</a></li>
                 <li><a href="" className="">LOCAL ATTRACTIONS</a></li>
               </ul>
             </li>
-            <li>
+            <li className="top-li" onMouseOver={this.showContextMenu.bind(this)}>
               <a href="" className="">RESTAURANT & SALOON</a>
-              <ul className="sub-nav-restaurant">
+              <ul className="">
                 <li><a href="" className="">BEER & WINE LIST</a></li>
                 <li><a href="" className="">MENU</a></li>
                 <li><a href="" className="">SPECIAL EVENTS/CATERING</a></li>
@@ -73,9 +60,9 @@ class App extends Component {
             </li>
             <li><a href="" className="">EVENTS</a></li>
             <li><a href="" className="">MERCANTILE</a></li>
-            <li>
+            <li className="top-li" onMouseOver={this.showContextMenu.bind(this)}>
               <a href="" className="">ABOUT US</a>
-              <ul className="sub-nav-about">
+              <ul className="">
                 <li><a href="" className="">HISTORY</a></li>
                 <li><a href="" className="">CAREERS</a></li>
                 <li><a href="" className="">MISSION STATEMENT/VISION</a></li>
@@ -86,13 +73,7 @@ class App extends Component {
         </div>
         
         {/* header carousel */}
-        <div className="carousel-container">
-          <div id="home-carousel" className="header-carousel">
-            <img src="https://via.placeholder.com/1600x400" alt="Placeholder" className="header-image"/>
-            <img src="https://via.placeholder.com/1700x450" alt="Placeholder" className="header-image"/>
-            <img src="https://via.placeholder.com/1660x470" alt="Placeholder" className="header-image"/>
-          </div>
-        </div>
+        <Carousel/>
 
       </div>
     );
